@@ -13,7 +13,7 @@ const express = require('express');
 const app = express();
 
 // Corrigido: caminho relativo para a pasta src/routes
-const agendaRoutes = require('../src/routes/agenda');
+const agendaRoutes = require('./src/routes/agenda');
 
 app.use(express.json()); // Recebe JSON
 app.use('/agenda', agendaRoutes); // Conecta as rotas
