@@ -8,12 +8,12 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-
+app.use(express.json());
 // Caminhos ajustados para refletir a estrutura dentro de src/
 const usuariosRoutes = require('./routes/usuarios');
 const agendaRoutes = require('./routes/agenda');
 
-app.use(express.json());
+
 
 app.get('/', (req, res) => {
   res.send('Servidor em Operação');
