@@ -14,8 +14,9 @@ app.use(express.json());
 
 // Rota principal
 app.get('/', (req, res) => {
-  res.send('ervidor de Agendamento Em operaçao !');
+  res.send('Servidor em Operação');
 });
+
 
 // Conectando as rotas de usuários
 app.use('/usuarios', usuariosRoutes);

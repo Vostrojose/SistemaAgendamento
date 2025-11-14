@@ -1,13 +1,13 @@
 {
   "name": "sistemaagendamento",
   "version": "1.0.0",
-  "description": "",
+  "description": "**Autor:** Grupo 31  \r **Data:** 11-11-2025  \r **Descrição:** Cadastro e login simples usando Express.js",
   "main": "index.js",
-"scripts": {
-  "start": "node src/server.js",
-  "dev": "nodemon src/server.js",
-  "test": "echo \"Error: no test specified\" && exit 1"
-},
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -21,7 +21,13 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vostrojose/SistemaAgendamento.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vostrojose/SistemaAgendamento/issues"
+  },
+  "homepage": "https://github.com/Vostrojose/SistemaAgendamento#readme"
 }
-
-
