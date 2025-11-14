@@ -8,18 +8,19 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const usuariosRoutes = require('./routes/usuarios'); // Importação de rotas de usuários
+
+// Caminhos ajustados para refletir a estrutura dentro de src/
+const usuariosRoutes = require('./routes/usuarios');
+const agendaRoutes = require('./routes/agenda');
 
 app.use(express.json());
 
-// Rota principal
 app.get('/', (req, res) => {
   res.send('Servidor em Operação');
 });
 
-
-// Conectando as rotas de usuários
 app.use('/usuarios', usuariosRoutes);
+app.use('/agenda', agendaRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando em http://localhost:${PORT}`));
