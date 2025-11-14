@@ -1,60 +1,73 @@
-
-
-<!--
-  Projeto PI Senac 2025 - v1 do "Frontend"
-  Autor: [grupo 31]
-  Descrição: Server simples usando Express.js
-  Data: [11-11-2025]
--->
-
-cadastro.html
-
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Cadastro - Sistema de Agendamento</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h2>Cadastro de Usuário</h2>
+  <header>
+    <nav class="navbar">
+      <a href="home.html">Home</a>
+      <a href="login.html">Entrar</a>
+      <a href="cadastro.html">Cadastro</a>
+    </nav>
+  </header>
 
-  <form id="formCadastro">
-    <label>Nome:</label>
-    <input type="text" id="nome" required>
+  <main>
+    <h2>Cadastro de Usuário</h2>
 
-    <label>Email:</label>
-    <input type="email" id="email" required>
+    <form id="formCadastro">
 
-    <label>Senha:</label>
-    <input type="password" id="senha" required>
+      <label for="tipo">Tipo de Conta:</label>
+      <select id="tipo" required>
+        <option value="usuario">Usuário</option>
+        <option value="profissional">Profissional</option>
+      </select>
 
-    <button type="submit">Cadastrar</button>
-  </form>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" required>
 
-  <p id="mensagem"></p>
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" required>
+
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <p id="mensagem"></p>
+  </main>
 
   <script>
     document.getElementById('formCadastro').addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const dados = {
+        tipo: document.getElementById('tipo').value,
         nome: document.getElementById('nome').value,
         email: document.getElementById('email').value,
         senha: document.getElementById('senha').value
       };
 
-      const resposta = await fetch('http://localhost:3000/usuarios/registrar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const resposta = await fetch("http://localhost:3000/usuarios/registrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados)
       });
 
       const resultado = await resposta.json();
-      document.getElementById('mensagem').innerText = resultado.message;
+      const msg = document.getElementById('mensagem');
+      msg.innerText = resultado.message;
+
+      msg.style.color = resposta.ok ? "green" : "red";
     });
   </script>
+
 </body>
+
 </html>
-
-
