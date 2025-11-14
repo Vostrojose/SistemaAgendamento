@@ -8,19 +8,26 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+
+// Middlewares para interpretar JSON e dados de formulários HTML
 app.use(express.json());
-// Caminhos ajustados para refletir a estrutura dentro de src/
+app.use(express.urlencoded({ extended: true }));
+
+// Importação das rotas
 const usuariosRoutes = require('./routes/usuarios');
 const agendaRoutes = require('./routes/agenda');
 
-
-
+// Rota raiz
 app.get('/', (req, res) => {
-  res.send('Servidor em Operação');
+  res.send('Servidor de Agendamento Em operação!');
 });
 
+// Rotas da aplicação
 app.use('/usuarios', usuariosRoutes);
 app.use('/agenda', agendaRoutes);
 
+// Inicialização do servidor
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor rodando em http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
