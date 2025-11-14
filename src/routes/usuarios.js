@@ -9,41 +9,38 @@
  * Baseado no guia oficial: https://expressjs.com/pt-br/guide/routing.html
  */
 
+
 const express = require('express');
 const router = express.Router(); // Cria um roteador separado
 
 // Rota GET listar usuários
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
   res.send('Lista de usuários');
 });
 
-//  Rota POST registrar novo usuário
-router.post('/registrar', function (req, res) {
-  const nome = req.body.nome;
-  const email = req.body.email;
-  const senha = req.body.senha;
-
-  // Verifica se campos foram preenchidos
-  if (!nome || !email || !senha) {
+// Rota POST registrar novo usuário
+router.post('/registrar', (req, res) => {
+  // Verifica se o corpo da requisição existe e contém os campos esperados
+  if (!req.body || !req.body.nome || !req.body.email || !req.body.senha) {
     return res.status(400).json({ message: "Preencha todos os campos!" });
   }
 
-  // Simula cadastro 
+  const { nome, email, senha } = req.body;
+
+  // Simula cadastro
   res.json({
     message: "Usuário cadastrado!",
-    usuario: { nome: nome, email: email }
+    usuario: { nome, email }
   });
 });
 
 // Rota POST para login
-router.post('/login', function (req, res) {
-  const email = req.body.email;
-  const senha = req.body.senha;
-
-  // Verifica se os campos foram preenchidos
-  if (!email || !senha) {
+router.post('/login', (req, res) => {
+  if (!req.body || !req.body.email || !req.body.senha) {
     return res.status(400).json({ message: "Campos obrigatórios não informados." });
   }
+
+  const { email, senha } = req.body;
 
   // Usuário 1: Giovana (cliente)
   const usuarioGiovana = {
