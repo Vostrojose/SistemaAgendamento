@@ -3,35 +3,44 @@
  * Autor: [Grupo 31]
  * Descrição: Agenda simples usando Express.js
  * Data: [11-11-2025]
+ *//**
+ * Baseado no guia oficial: https://expressjs.com/pt-br/guide/routing.html
  */
 
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); // Cria um rote
 
-// Rota principal da agenda
-router.get('/', (req, res) => {
-  res.json({ message: ' Lista de agendamentos!' });
+//Rota GET para lista de agendamentos
+router.get('/', function (req, res) {
+  res.json({ message: 'Lista de agendamentos!' });
 });
 
-module.exports = router;
-
-// Criar um novo agendamento
-router.post('/', (req, res) => {
+// Rota POST novo agendamento
+router.post('/', function (req, res) {
   const novoAgendamento = req.body;
+
+  // Retorna o agendamento 
   res.status(201).json({
     message: 'Agendamento criado!',
     dados: novoAgendamento
   });
 });
 
-// Atualizar um agendamento
-router.put('/:id', (req, res) => {
-  const { id } = req.params;
+// Rota PUT para atualizar agendamento 
+router.put('/:id', function (req, res) {
+  const id = req.params.id;
+
+  // Simula 
   res.json({ message: `Agendamento ${id} atualizado!` });
 });
 
-// Excluir um agendamento
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
+//  Rota DELETE
+router.delete('/:id', function (req, res) {
+  const id = req.params.id;
+
+  // Simu exclusão
   res.json({ message: `Agendamento ${id} removido!` });
 });
+
+// Exporta todas as rotas para serem usadas no principal
+module.exports = router;

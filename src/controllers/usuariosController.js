@@ -35,7 +35,11 @@ exports.registrarUsuario = async (req, res) => {
 // Login
 exports.loginUsuario = async (req, res) => {
   try {
-    const { email, senha } = req.body;
+  if (!req.body || !req.body.nome || !req.body.email || !req.body.senha) {
+  return res.status(400).json({ message: 'Campos obrigatórios.' });
+}
+
+const { nome, email, senha } = req.body;
 
     const resultado = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
 

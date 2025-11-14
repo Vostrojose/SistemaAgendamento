@@ -8,16 +8,17 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+// Configuração da conexão com PostgreSQL
 const pool = new Pool({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE, // conexão projeto_pi_senac_2025_v1
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_PORT
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production'
+    ? { rejectUnauthorized: false } // Render exige SSL com essa opção
+    : false // Em ambiente local, SSL pode ser desativado
 });
 
+// Teste de conexão (opcional, mas útil para logs)
 pool.connect()
-  .then(() => console.log('Conectado ao PostgreSQL com sucesso!'))
+  .then(() => console.log(' Conectado ao PostgreSQL com sucesso!'))
   .catch(err => console.error(' Erro ao conectar ao banco:', err));
 
 module.exports = pool;
