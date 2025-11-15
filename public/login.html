@@ -11,7 +11,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Login - Sistema de Agendamento</title>
-  <link rel="stylesheet" href="/public/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
     <nav class="navbar">
       <a href="home.html">Home</a>
       <a href="login.html">Entrar</a>
-      <a href="/usuarios/registrar">Cadastro</a>
+      <a href="/public/cadastro.html">Cadastro</a>
     </nav>
   </header>
 
@@ -66,8 +66,10 @@
           localStorage.setItem("tokenUsuario", resultado.token);
 
           setTimeout(() => {
-            window.location.href = "dashboard.html";
-          }, 1000);
+            //correção:
+            //window.location.href = "dashboard.html";
+            window.location.href = "paginaInicial.html";
+       }, 1000);
         } else {
           msg.style.color = "red";
         }

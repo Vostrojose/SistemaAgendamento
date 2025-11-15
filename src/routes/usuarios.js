@@ -11,37 +11,12 @@
 
 
 const express = require('express');
-const router = express.Router(); // Cria um roteador separado
-const path = require('path');
+const router = express.Router();
 
-// Rota GET listar usuários
-router.get('/', (req, res) => {
-  res.send('Lista de usuários');
-});
-
-
-// Rota GET registrar
-router.get('/registrar', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '..', 'public', 'cadastro.html'));
-});
-
-// Rota POST registrar novo usuário
-router.post('/registrar', (req, res) => {
-  // Verifica se o corpo da requisição existe e contém os campos esperados
-  if (!req.body || !req.body.nome || !req.body.email || !req.body.senha) {
-    return res.status(400).json({ message: "Preencha todos os campos!" });
-  }
-
-  const { nome, email, senha } = req.body;
-
-  // Simula cadastro
-  res.json({
-    message: "Usuário cadastrado!",
-    usuario: { nome, email }
-  });
-
-  console.log(`Novo usuário cadastrado: ${nome} - ${email}`);
-});
+// Array em memória para simular banco de dados
+let usuarios = [
+  { id: 1, nome: "José", email: "teste@email.com", senha: "123" }
+];
 
 // Rota POST para login
 router.post('/login', (req, res) => {
@@ -51,29 +26,19 @@ router.post('/login', (req, res) => {
 
   const { email, senha } = req.body;
 
-  // Usuário 1: Giovana (cliente)
-  const usuarioGiovana = {
-    email: "giovana.rodrigues@email.com",
-    senha: "yoga123"
-  };
+  const usuarioEncontrado = usuarios.find(
+    (u) => u.email === email && u.senha === senha
+  );
 
-  // Usuário 2: Daniela (profissional)
-  const usuarioDaniela = {
-    email: "daniela.souza@yogastudio.com",
-    senha: "studio123"
-  };
-
-  // Verifica se os dados estão corretos
-  if (
-    (email === usuarioGiovana.email && senha === usuarioGiovana.senha) ||
-    (email === usuarioDaniela.email && senha === usuarioDaniela.senha)
-  ) {
-    return res.json({ message: "Login realizado!" });
+  if (usuarioEncontrado) {
+    return res.json({
+      message: "Login realizado!",
+      token: "abc123", // token de exemplo
+      usuario: { id: usuarioEncontrado.id, nome: usuarioEncontrado.nome, email: usuarioEncontrado.email }
+    });
   }
 
-  // Se os dados estiverem errados
   res.status(401).json({ message: "Dados incorretos." });
 });
 
-// Exporta todas as rotas para serem usadas no app principal
 module.exports = router;
