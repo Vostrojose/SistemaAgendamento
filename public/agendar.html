@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Horário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="home.html">← Voltar</a>
+            <span>Novo Agendamento</span>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Agendar Novo Horário</h2>
+
+        <form id="formAgendamento">
+            <label>Data:</label>
+            <input type="date" id="data" required>
+
+            <label>Hora:</label>
+            <input type="time" id="hora" required>
+
+            <label>Descrição:</label>
+            <input type="text" id="descricao" placeholder="Ex: Consulta, reunião" required>
+
+            <button type="submit">Salvar Agendamento</button>
+        </form>
+
+        <p id="mensagem"></p>
+    </main>
+
+    <script>
+        const token = localStorage.getItem("tokenUsuario");
+        if (!token) window.location.href = "login.html";
+
+        document.getElementById("formAgendamento").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const dados = {
+                data: document.getElementById("data").value,
+                hora: document.getElementById("hora").value,
+                descricao: document.getElementById("descricao").value
+            };
+
+            const resposta = await fetch("http://localhost:3000/agendamentos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify(dados)
+            });
+
+            const resultado = await resposta.json();
+            document.getElementById("mensagem").innerText = resultado.mensagem;
+        });
+    </script>
+</body>
+</html>
