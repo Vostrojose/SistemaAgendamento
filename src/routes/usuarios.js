@@ -12,10 +12,17 @@
 
 const express = require('express');
 const router = express.Router(); // Cria um roteador separado
+const path = require('path');
 
 // Rota GET listar usuários
 router.get('/', (req, res) => {
   res.send('Lista de usuários');
+});
+
+
+// Rota GET registrar
+router.get('/registrar', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', 'public', 'cadastro.html'));
 });
 
 // Rota POST registrar novo usuário
@@ -32,6 +39,8 @@ router.post('/registrar', (req, res) => {
     message: "Usuário cadastrado!",
     usuario: { nome, email }
   });
+
+  console.log(`Novo usuário cadastrado: ${nome} - ${email}`);
 });
 
 // Rota POST para login
