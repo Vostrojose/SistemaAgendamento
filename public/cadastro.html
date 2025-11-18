@@ -1,3 +1,9 @@
+<!--
+ Projeto PI Senac 2025 - v1 "Frontend"
+ Autor: [grupo 31]
+ Descrição: Cadastro de usuário
+ Data: [17-11-2025]
+-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -11,7 +17,7 @@
 <body>
   <header>
     <nav class="navbar">
-      <a href="home.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="login.html">Entrar</a>
       <a href="cadastro.html">Cadastro</a>
     </nav>
@@ -46,7 +52,6 @@
   <script>
     document.getElementById('formCadastro').addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const dados = {
         tipo: document.getElementById('tipo').value,
         nome: document.getElementById('nome').value,
@@ -61,6 +66,8 @@
 
       const resultado = await resposta.json();
       const msg = document.getElementById('mensagem');
+      if (msg.innerText !== "") 
+        msg.innerText = "";
       msg.innerText = resultado.message;
 
       msg.style.color = resposta.ok ? "green" : "red";

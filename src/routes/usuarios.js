@@ -1,8 +1,8 @@
 /**
- * Projeto PI Senac 2025 - v1   "backend" 
- * Autor: [Grupo 31]
- * Descrição: Cadastro e login simples usando Express.js
- * Data: [11-11-2025]
+ * Projeto PI Senac 2025 - v1 "backend"
+ * Autor: [grupo 31]
+ * Descrição: Rotas de usuário (login/registro)
+ * Data: [17-11-2025]
  */
 /**
  * Rotas de usuários usando Express.js
@@ -20,7 +20,9 @@ router.post('/login', usuariosController.loginUsuario);
 
 router.get('/perfil', usuariosController.obterPerfilUsuario);
 
-router.get('/retornaClientes', usuariosController.retornaClientes);
+router.get('/retornaUsuarios', usuariosController.retornaUsuarios);
+
+router.put('/editar', usuariosController.editarUsuario);
 
 // Array em memória para simular banco de dados
 // let usuarios = [

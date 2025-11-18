@@ -1,3 +1,9 @@
+<!--
+ Projeto PI Senac 2025 - v1 "Frontend"
+ Autor: [grupo 31]
+ Descrição: Painel do usuário
+ Data: [17-11-2025]
+-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -42,7 +48,7 @@
 
         async function carregarPerfil() {
             try {
-                const resposta = await fetch("http://localhost:3000/usuarios/perfil", {
+                const resposta = await fetch("/usuarios/perfil", {
                     method: "GET",
                     headers: { "Authorization": "Bearer " + token }
                 });

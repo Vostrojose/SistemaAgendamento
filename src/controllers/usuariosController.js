@@ -1,8 +1,8 @@
 /**
- * Projeto PI Senac 2025 - v1  "backend" 
+ * Projeto PI Senac 2025 - v1 "backend"
  * Autor: [grupo 31]
- * Descrição: controle de usúario 
- * Data: [11-11-2025]
+ * Descrição: Lógica de usuários (auth)
+ * Data: [17-11-2025]
  */
 
 
@@ -14,7 +14,7 @@ require('dotenv').config();
 // Cadastrar novo usuário
 exports.registrarUsuario = async (req, res) => {
   try {
-    const { nome, email, senha } = req.body;
+    const { nome, email, senha, tipo } = req.body;
 
     if (!nome || !email || !senha) {
       return res.status(400).json({ message: 'Preencha todos os campos.' });
@@ -22,14 +22,28 @@ exports.registrarUsuario = async (req, res) => {
 
     const senhaCriptografada = await bcrypt.hash(senha, 10);
 
+    const { rows: usuarioExistente } = await pool.query(
+      'SELECT id FROM usuarios WHERE email = $1',
+      [email]
+    );
+
+    if (usuarioExistente.length > 0) {
+      return res.status(409).json({ message: 'Este e-mail já está cadastrado.' });
+    }
+
     await pool.query(
-      'INSERT INTO usuarios (nome, email, senha) VALUES ($1, $2, $3)',
-      [nome, email, senhaCriptografada]
+      'INSERT INTO usuarios (nome, email, senha, tipo) VALUES ($1, $2, $3, $4)',
+      [nome, email, senhaCriptografada, tipo || 'usuario']
     );
 
     res.status(201).json({ message: ' Usuário cadastrado com sucesso!' });
   } catch (error) {
-    res.status(500).json({ message: 'Erro ao registrar usuário', error: error.message });
+    console.error('Erro ao registrar usuário:', error);
+    const resposta = {
+      message: 'Erro ao registrar usuário',
+      error: error.code === '23505' ? 'Violação de unicidade no e-mail' : error.message
+    };
+    return res.status(error.code === '23505' ? 409 : 500).json(resposta);
   }
 };
 
@@ -72,15 +86,15 @@ const { email, senha } = req.body;
   }
 };
 
-
-exports.retornaClientes = async (req, res) => {
+  
+exports.retornaUsuarios = async (req, res) => {
   try {
-    const resultado = await pool.query('SELECT * FROM clientes');
+    const resultado = await pool.query('SELECT * FROM usuarios');
     return res.json({
       message: resultado.rows
     });
   } catch (error) {
-    res.status(500).json({ message: 'Erro ao retornar clientes', error: error.message });
+    res.status(500).json({ message: 'Erro ao retornar usuarios', error: error.message });
   }
 }
 
@@ -110,5 +124,34 @@ exports.obterPerfilUsuario = async (req, res) => {
     }
     console.error(err);
     return res.status(500).json({ message: "Erro interno." });
+  }
+};
+
+exports.editarUsuario = async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "Token não fornecido." });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const { nome, email } = req.body;
+
+    if (!nome || !email) {
+      return res.status(400).json({ message: 'Preencha todos os campos.' });
+    }
+
+    await pool.query(
+      'UPDATE usuarios SET nome = $1, email = $2 WHERE id = $3',
+      [nome, email, decoded.id]
+    );
+
+    res.json({ message: 'Usuário atualizado com sucesso!' });
+  } catch (error) {
+    if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
+      return res.status(401).json({ message: "Token inválido." });
+    }
+    console.error('Erro ao editar usuário:', error);
+    return res.status(500).json({ message: 'Erro ao editar usuário', error: error.message });
   }
 };
