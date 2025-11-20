@@ -1,54 +1,62 @@
-# Projeto PI Senac 2025 - v1
+#  Projeto PI Senac 2025 - v1
 
-**Autor:** Grupo 31  
-**Data:** 11-11-2025  
-**Descrição:** Cadastro e login simples usando Express.js
+**Data:** 20/11/2025  
+**Descrição:** Sistema de cadastro, login e agendamento de serviços utilizando **Node.js**, **Express.js** e **PostgreSQL**.  
+
+**Autores – Grupo 08:**  
+- Beatriz Pigatto  
+- Carlos Eduardo Brito de Oliveira  
+- Danilo de Sousa Bailon  
+- Gabriel Gomes Martins  
+- Gabriel Santos do Carmo  
+- Jose Maria da Silva  
 
 ---
 
-## Sistema de Agendamento
-
-### Objetivo
-O backend será desenvolvido utilizando **Node.js**.  
-Contará com um banco de dados **PostgreSQL**, autenticação de usuários com **JSON Web Tokens (JWT)**,  
-seguindo práticas de segurança com uso de **hash** para senhas.
+## Objetivo
+Prova de Conceito (PoC – Proof of Concept)v**sistema de agendamento online** que permita:
+- Demonstração de rotas para funcionalidades em
+- Cadastro e login de usuários.
+- Criação, edição e exclusão de agendamentos.
+- Visualização de agendamentos por clientes e profissionais.
+- Autenticação segura.
 
 ---
 
 ## Estrutura do Projeto
 
-- **`package.json` e `package-lock.json`**  
-  Criados ao executar o comando `npm init`.  
-  Servem como descritivo do projeto.
+- **`src/`** → código-fonte do backend  
+  - `server.js`: ponto de entrada da aplicação.  
+  - `routes/`: rotas da API (ex.: `usuarios.js`, `agenda.js`).  
+  - `controllers/`: lógica de negócio.  
+  - `db.js`: configuração da conexão com PostgreSQL.  
 
-- **`.gitignore`**  
-  Arquivo que orienta o Git.
+- **`public/`** → páginas HTML e arquivos estáticos  
+  - `cadastro.html` → cadastro de usuário  
+  - `login.html` → login de usuário  
+  - `egendar.html` → agendamento de serviços  
+  - `meusAgendamentos.html` → listagem de agendamentos  
+  - `editarPerfil.html` → edição de perfil  
+  - `home.html` / `paginaInicial.html` → navegação principal  
 
-- **`.env`**  
-  Armazena variáveis de ambiente, como senhas, tokens e configurações sensíveis.
-
-- **`node_modules/`**  
-  Pasta criada automaticamente ao executar `npm install`.  
-  Armazena os códigos-fonte das dependências do projeto.
-
-- **`README.md`**  
-  Este arquivo. Serve como documentação e guia do projeto.
+- **`.env`** → variáveis de ambiente (credenciais do banco e chave JWT).  
+- **`package.json`** → dependências e scripts do projeto.  
+- **`README.md`** → documentação do projeto.  
 
 ---
 
-## Observações
+## Tecnologias Utilizadas
+- **Node.js** – ambiente de execução JavaScript.  
+- **Express.js** – framework para criação de rotas e APIs.  
+- **PostgreSQL** – banco de dados relacional.  
+- **pgAdmin 4** – administração do banco.  
+- **Postman** – testes das rotas da API.    
+- **JWT (JSON Web Token)** – autenticação de usuários.  
 
-Durante o início do desenvolvimento com Node.js, foram notadas algumas particularidades na estrutura do projeto que estão descritas acima para facilitar o entendimento e manutenção.
+---
 
-- **`Postman`**  
-  foi usado como plataforma para testar baixei direto da internet.
+## Como Executar
 
-  - **` pgAdmin 4`**  
-  foi usado para administrar o bancos de dados PostgreSQL. baixei direto da internet, sem segredo para instalar.
-
-
-- **` PostgreSQL`**  
-  gerenciamento do banco de dados relacional (SGBD).
-
- - **` duvidas!!!`**  criei uma pasta public para rodar o Frontend, será que
-  backend e frontend podem rodar juntos sem apresentar conflitos? falta desenvolver a logica.
+1. Clone o repositório:
+ 
+   git clone https://github.com/Vostrojose/SistemaAgendamento.git
