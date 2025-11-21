@@ -11,6 +11,7 @@
 const express = require('express');
 const router = express.Router(); // Cria um rote
 const pool = require('../config/db');
+const agendaController = require('../controllers/agendaController');
 
 //Rota GET para lista de agendamentos do usuário
 router.get('/meus', function (req, res) {
@@ -32,47 +33,50 @@ router.get('/', function (req, res) {
 });
 
 // Rota POST novo agendamento
-router.post('/', async function (req, res) {
-  const novoAgendamento = req.body;
-  const datAtual = new Date().toISOString();
+router.post('/agendar', agendaController.novoAgendamento);
 
-  // Validação básica
-  if (!novoAgendamento.titulo || !novoAgendamento.data_horario) {
-    return res.status(400).json({
-      message: 'Campos obrigatórios: titulo, data_horario',
-      error: 'Dados incompletos'
-    });
-  }
 
-  try { 
-    const token = req.headers.authorization?.split(" ")[1];
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const resultado = await pool.query(
-      'SELECT id, nome, email FROM usuarios WHERE id = $1',
-      [decoded.id]
-    );
-
-    const result = await pool.query(
-      'INSERT INTO agenda (titulo, descricao, data_horario, cliente_id, criado_em) VALUES ("Agendador", $1, $2, $3, $4)',
-      [novoAgendamento.descricao, novoAgendamento.data_horario, resultado, datAtual]
-    );
-
-    // Retorna o agendamento criado com o ID
-    res.status(201).json({
-      message: 'Agendamento criado com sucesso!',
-      id: result.rows[0].id,
-      dados: novoAgendamento
-    });
-  } catch (error) {
-    console.error('Erro ao registrar agendamento:', error);
-    const resposta = {
-      message: 'Erro ao registrar agendamento',
-      error: error.message
-    };
-    return res.status(404, 505).json({ message: token });
-  }
-});
+//router.post('/', async function (req, res) {
+//  const novoAgendamento = req.body;
+//  const datAtual = new Date().toISOString();
+//
+//  // Validação básica
+//  if (!novoAgendamento.titulo || !novoAgendamento.data_horario) {
+//    return res.status(400).json({
+//      message: 'Campos obrigatórios: titulo, data_horario',
+//      error: 'Dados incompletos'
+//    });
+//  }
+//
+//  try { 
+//    const token = req.headers.authorization?.split(" ")[1];
+//
+//    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//    const resultado = await pool.query(
+//      'SELECT id, nome, email FROM usuarios WHERE id = $1',
+//      [decoded.id]
+//    );
+//
+//    const result = await pool.query(
+//      'INSERT INTO agenda (titulo, descricao, data_horario, cliente_id, criado_em) //VALUES ("Agendador", $1, $2, $3, $4)',
+//      [novoAgendamento.descricao, novoAgendamento.data_horario, resultado, datAtual]
+//    );
+//
+//    // Retorna o agendamento criado com o ID
+//    res.status(201).json({
+//      message: 'Agendamento criado com sucesso!',
+//      id: result.rows[0].id,
+//      dados: novoAgendamento
+//    });
+//  } catch (error) {
+//    console.error('Erro ao registrar agendamento:', error);
+//    const resposta = {
+//      message: 'Erro ao registrar agendamento',
+//      error: error.message
+//    };
+//    return res.status(404, 505).json({ message: token });
+//  }
+//});
 
 // Rota PUT para atualizar agendamento 
 router.put('/:id', function (req, res) {

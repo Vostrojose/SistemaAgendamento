@@ -55,7 +55,7 @@
 
             try {
                 // Use caminho relativo (sem localhost) para funcionar no servidor
-                const resposta = await fetch("/agenda", {
+                const resposta = await fetch("/agendamentos/agendar", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
