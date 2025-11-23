@@ -63,7 +63,8 @@
 
         if (resposta.ok) {
           msg.style.color = "green";
-          localStorage.setItem("tokenUsuario", resultado.token);
+          localStorage.setItem("tokenUsuario", resultado.token);//Salva o token
+          localStorage.setItem("userId", resultado.usuario.id);//Salva o ID do usuário para usar nos agendamentos
 
           setTimeout(() => {
             //correção:

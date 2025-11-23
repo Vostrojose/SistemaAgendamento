@@ -47,12 +47,17 @@
         document.getElementById("formAgendamento").addEventListener("submit", async (e) => {
             e.preventDefault();
 
+            const userId = localStorage.getItem("userId"); 
+
             const dados = {
                 data: document.getElementById("data").value,
                 hora: document.getElementById("hora").value,
-                descricao: document.getElementById("descricao").value
+                descricao: document.getElementById("descricao").value,
+                userId
             };
-
+            //CONSOLELOG PARA TESTE
+            console.log("DADOS ENVIADOS:", dados);
+            console.log("TOKEN ENVIADO:", token);
             try {
                 // Use caminho relativo (sem localhost) para funcionar no servidor
                 const resposta = await fetch("/agendamentos/agendar", {
