@@ -4,6 +4,7 @@
  * Descrição: Agenda simples usando Express.js (sem token)
  */
 
+const { json } = require('express');
 const pool = require('../config/db');
 require('dotenv').config();
 
@@ -45,3 +46,28 @@ exports.novoAgendamento = async (req, res) => {
         return res.status(500).json({ message: "Erro no servidor." });
     }
 };
+
+//Listar agendamentos 
+exports.listarAgendamentos = async (req,res) =>{
+    try {
+        const lista = await pool.query(
+            'SELECT * FROM agendamentos WHERE user_id = $1',
+            [req.user.id]
+        );
+
+        if(lista.rows.length === 0){
+            return res.status(400).json({
+                error: "Nenhum agendamento encontrado."
+            });
+        }
+
+        return res.status(200).json(
+            lista.rows
+        );
+
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message
+        });
+    }
+}

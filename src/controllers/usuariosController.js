@@ -86,7 +86,7 @@ const { email, senha } = req.body;
   }
 };
 
-  
+// Retorna todos os usuários
 exports.retornaUsuarios = async (req, res) => {
   try {
     const resultado = await pool.query('SELECT * FROM usuarios');
@@ -98,6 +98,7 @@ exports.retornaUsuarios = async (req, res) => {
   }
 }
 
+// Retorna usuário específico
 exports.obterPerfilUsuario = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
@@ -127,6 +128,7 @@ exports.obterPerfilUsuario = async (req, res) => {
   }
 };
 
+// Edita Nome e email de usuário
 exports.editarUsuario = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {

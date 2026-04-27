@@ -32,14 +32,25 @@ const tableDefinitions = [
       criado_em TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()
     )`
   },
+  //{
+  //  name: 'agenda',
+  //  createStatement: `CREATE TABLE IF NOT EXISTS agenda (
+  //    id SERIAL PRIMARY KEY,
+  //    titulo TEXT NOT NULL,
+  //    descricao TEXT,
+  //    data_horario TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  //    cliente_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
+  //    criado_em TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()
+  //  )`
+  //}
   {
-    name: 'agenda',
-    createStatement: `CREATE TABLE IF NOT EXISTS agenda (
+    name: 'agendamentos',
+    createStatement: `CREATE TABLE IF NOT EXISTS agendamentos (
       id SERIAL PRIMARY KEY,
-      titulo TEXT NOT NULL,
       descricao TEXT,
-      data_horario TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-      cliente_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
+      data_agendamento DATE NOT NULL,
+      hora_agendamento TIME NOT NULL,
+      user_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
       criado_em TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()
     )`
   }

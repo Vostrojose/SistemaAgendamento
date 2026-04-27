@@ -14,18 +14,7 @@ const pool = require('../config/db');
 const agendaController = require('../controllers/agendaController');
 
 //Rota GET para lista de agendamentos do usuário
-router.get('/meus', function (req, res) {
-  // TODO: Implementar autenticação e buscar agendamentos do usuário no banco
-  const agendamentos = [
-    {
-      id: 1,
-      data: '2025-11-20',
-      hora: '10:30',
-      descricao: 'Consulta médica'
-    }
-  ];
-  res.json(agendamentos);
-});
+router.get('/meus', agendaController.listarAgendamentos);//Continuar daqui ...*************************************************
 
 //Rota GET para lista de todos os agendamentos
 router.get('/', function (req, res) {
