@@ -12,10 +12,10 @@ const express = require('express');
 const router = express.Router(); // Cria um rote
 const pool = require('../config/db');
 const agendaController = require('../controllers/agendaController');
+const autenticarToken = require('../middleware/auth');
 
 //Rota GET para lista de agendamentos do usuário
-router.get('/meus', agendaController.listarAgendamentos);//Continuar daqui ...*************************************************
-
+router.get('/meus',autenticarToken,agendaController.listarAgendamentos);
 //Rota GET para lista de todos os agendamentos
 router.get('/', function (req, res) {
   res.json({ message: 'Lista de agendamentos!' });

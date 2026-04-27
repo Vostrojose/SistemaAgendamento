@@ -50,9 +50,11 @@ exports.novoAgendamento = async (req, res) => {
 //Listar agendamentos 
 exports.listarAgendamentos = async (req,res) =>{
     try {
+        console.log(req.usuario.id)
+
         const lista = await pool.query(
             'SELECT * FROM agendamentos WHERE user_id = $1',
-            [req.user.id]
+            [req.usuario.id]
         );
 
         if(lista.rows.length === 0){
@@ -60,6 +62,8 @@ exports.listarAgendamentos = async (req,res) =>{
                 error: "Nenhum agendamento encontrado."
             });
         }
+        
+        console.log(lista.rows);
 
         return res.status(200).json(
             lista.rows

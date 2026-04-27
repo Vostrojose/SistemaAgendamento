@@ -29,34 +29,30 @@
         </ul>
     </main>
 
-    <script>
-        const token = localStorage.getItem("tokenUsuario");
-        if (!token) window.location.href = "login.html";
-
-        async function carregarAgendamentos() {
-            const resposta = await fetch("/agendamentos/meus", {
-                method: "GET",
-                headers: { "Authorization": "Bearer " + token }
-            });
-
-            const lista = await resposta.json();
-
+    <script> 
+        const token = localStorage.getItem("tokenUsuario"); 
+        if (!token) window.location.href = "login.html"; 
+        
+        console.log(token); 
+        
+        async function carregarAgendamentos() { 
+            const resposta = await fetch("/agendamentos/meus", { 
+                method: "GET", headers: { "Authorization": "Bearer " + token } 
+            }); 
+            const lista = await resposta.json(); 
             if (!lista.length) {
-                document.getElementById("listaAgendamentos").innerHTML =
-                    "<li>Nenhum agendamento encontrado.</li>";
-                return;
-            }
+                document.getElementById("listaAgendamentos").innerHTML = "<li>Nenhum agendamento encontrado.</li>"; 
+                return; 
+            } 
+            document.getElementById("listaAgendamentos").innerHTML = lista.map(a => `
+                <li>
+                    <b>${new Date(a.data_agendamento).toLocaleDateString("pt-BR")}</b> às <b>${a.hora_agendamento.slice(0,5)}</b><br>
+                    ${a.descricao} 
+                </li>` ).join(""); 
+        } 
+        
+        carregarAgendamentos(); 
 
-            document.getElementById("listaAgendamentos").innerHTML =
-                lista.map(a => `
-                    <li>
-                        <b>${a.data}</b> às <b>${a.hora}</b><br>
-                        ${a.descricao}
-                    </li>
-                `).join("");
-        }
-
-        carregarAgendamentos();
     </script>
 
 </body>
